@@ -27,6 +27,11 @@ func Workflow(ctx workflow.Context, name string) (string, error) {
 		logger.Error("Activity failed.", "Error", err)
 		return "", err
 	}
+	err = workflow.ExecuteActivity(ctx, "GenerateCheckRunSummaryReport").Get(ctx, nil)
+	if err != nil {
+		logger.Error("GenerateCheckRunSummaryReport failed.", "Error", err)
+		return "", err
+	}
 
 	logger.Info("HelloWorld workflow completed.", "result", result)
 
